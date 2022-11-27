@@ -1,0 +1,23 @@
+.input {
+    border: 3px solid var(--border);
+    border-radius: .5em;
+    padding: 0;
+    background-color: var(--bg-accent);
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.input:focus-within {
+    border-color: var(--selected);
+}
+
+.input * {
+    border: none;
+    box-sizing: border-box;
+    padding: .5em;
+    max-width: 90px;
+    min-width: 60px;
+    background-color: transparent;
+    outline: none;
+    font-weight: 500;
+}
