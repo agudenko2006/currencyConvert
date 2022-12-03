@@ -29,19 +29,19 @@ function App() {
           selectedCurrency={currA}
           value={valA}
           
-          currencyChanged={setCurrA}
-          valueChanged={setValA}
+          onCurrencyChange={setCurrA}
+          onValueChange={setValA}
         ></CurrencyInput>
 
-        <input type="button" value="->" className="swap-btn" title="click to swap" onClick={swap} />
+        <input type="button" value="<->" className="swap-btn" title="click to swap" onClick={swap} />
 
         <CurrencyInput
           allCurrencies={currencies}
           selectedCurrency={currB}
           value={valB}
           
-          currencyChanged={setCurrB}
-          valueChanged={setValB}
+          onCurrencyChange={setCurrB}
+          onValueChange={setValB}
         ></CurrencyInput>
       </div>
     </div>

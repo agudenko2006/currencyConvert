@@ -5,18 +5,18 @@ export interface ICurrencyInputProps {
     selectedCurrency: string,
     value: number,
     
-    currencyChanged(value: string): void,
-    valueChanged(value: number): void,
+    onCurrencyChange(value: string): void,
+    onValueChange(value: number): void,
 }
 
 export function CurrencyInput(props: ICurrencyInputProps) {
     return <div className='input'>
         <input type="number" value={props.value} min={0} onChange={e =>
-            props.valueChanged(e.target.valueAsNumber)
+            props.onValueChange(e.target.valueAsNumber)
         } />
         
         <select onChange={e =>
-            props.currencyChanged(e.target.value)
+            props.onCurrencyChange(e.target.value)
         }>
             {props.allCurrencies.map(curr => 
                 <option selected={curr===props.selectedCurrency} value={curr}>{curr}</option>
