@@ -1,24 +1,47 @@
 import { useState } from 'react'
 import './App.css'
 import { CurrencyInput } from './CurrencyInput'
+import { calculateExchange, getKnownCurrencies, IOptions } from './logic'
+import { Options } from './Options';
 
-let currencies = ["RUB", "USD", "BTC"]
+let currencies = getKnownCurrencies();
 
 function App() {
   const [valA, setValA] = useState(5)
-  const [currA, setCurrA] = useState("USD")
+  const [currA, setCurrA] = useState(currencies[0])
   const [valB, setValB] = useState(0)
-  const [currB, setCurrB] = useState("BTC")
+  const [currB, setCurrB] = useState(currencies[1])
+  const [premium, setPremium] = useState(false)
+  const [fast, setFast] = useState(false)
 
-  function swap() {
-    let valTmp = valA
-    let currTmp = currA
+  const updateB = (val: number) => setValB(calculateExchange(currA, currB, val, {premium, fast}))
+  const updateA = (val: number) => setValA(calculateExchange(currB, currA, val, {premium, fast}))
+  const updateOpt = (opt: IOptions) => setValB(calculateExchange(currA, currB, valA, opt)) 
 
-    setValA(valB)
-    setValB(valTmp)
+  function handleCurrAChange(val: string) {
+    setCurrA(val)
+    updateB(valA)
+  }
+  function handleCurrBChange(val: string) {
+    setCurrB(val)
+    updateA(valB)
+  }
+  function handleValAChange(val: number) {
+    setValA(val)
+    updateB(val)
+  }
+  function handleValBChange(val: number) {
+    setValB(val)
+    updateA(val)
+  }
 
-    setCurrA(currB)
-    setCurrB(currTmp)
+  function handlePremiumChange(val: boolean) {
+    setPremium(val)
+    updateOpt({premium: val, fast})
+  }
+  function handleFastChange(val: boolean) {
+    setFast(val)
+    updateOpt({premium, fast: val})
   }
 
   return (
@@ -29,21 +52,25 @@ function App() {
           selectedCurrency={currA}
           value={valA}
           
-          onCurrencyChange={setCurrA}
-          onValueChange={setValA}
+          onCurrencyChange={handleCurrAChange}
+          onValueChange={handleValAChange}
         ></CurrencyInput>
 
-        <input type="button" value="<->" className="swap-btn" title="click to swap" onClick={swap} />
+        <span>-&gt;</span>
 
         <CurrencyInput
           allCurrencies={currencies}
           selectedCurrency={currB}
           value={valB}
           
-          onCurrencyChange={setCurrB}
-          onValueChange={setValB}
+          onCurrencyChange={handleCurrBChange}
+          onValueChange={handleValBChange}
         ></CurrencyInput>
       </div>
+      <Options
+        onPremiumChange={handlePremiumChange}
+        onFastChange={handleFastChange}
+      ></Options>
     </div>
   )
 }
