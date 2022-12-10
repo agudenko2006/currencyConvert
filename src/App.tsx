@@ -1,78 +1,50 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css'
 import { CurrencyInput } from './CurrencyInput'
-import { calculateExchange, getKnownCurrencies, IOptions } from './logic'
+import { getKnownCurrencies } from './logic'
 import { Options } from './Options';
+import { appState, setCurrA, setCurrB, setValA, setValB } from './store';
 
 let currencies = getKnownCurrencies();
 
 function App() {
-  const [valA, setValA] = useState(5)
-  const [currA, setCurrA] = useState(currencies[0])
-  const [valB, setValB] = useState(0)
-  const [currB, setCurrB] = useState(currencies[1])
-  const [premium, setPremium] = useState(false)
-  const [fast, setFast] = useState(false)
+    const dispatch = useDispatch();
 
-  const updateB = (val: number) => setValB(calculateExchange(currA, currB, val, {premium, fast}))
-  const updateA = (val: number) => setValA(calculateExchange(currB, currA, val, {premium, fast}))
-  const updateOpt = (opt: IOptions) => setValB(calculateExchange(currA, currB, valA, opt)) 
+    const currA = useSelector((state: appState) => state.currencyA)
+    const currB = useSelector((state: appState) => state.currencyB)
+    const valA = useSelector((state: appState) => state.valA)
+    const valB = useSelector((state: appState) => state.valB)
 
-  function handleCurrAChange(val: string) {
-    setCurrA(val)
-    updateB(valA)
-  }
-  function handleCurrBChange(val: string) {
-    setCurrB(val)
-    updateA(valB)
-  }
-  function handleValAChange(val: number) {
-    setValA(val)
-    updateB(val)
-  }
-  function handleValBChange(val: number) {
-    setValB(val)
-    updateA(val)
-  }
+    return (
+        <div className="wrapper">
+            <div className="topbar">
+                <CurrencyInput
+                    allCurrencies={currencies}
+                    selectedCurrency={currA}
+                    value={valA}
 
-  function handlePremiumChange(val: boolean) {
-    setPremium(val)
-    updateOpt({premium: val, fast})
-  }
-  function handleFastChange(val: boolean) {
-    setFast(val)
-    updateOpt({premium, fast: val})
-  }
+                    onCurrencyChange={(val: string) => dispatch(setCurrA(val))}
+                    onValueChange={(val: number) => dispatch(setValA(val))}
+                ></CurrencyInput>
 
-  return (
-    <div className="wrapper">
-      <div className="topbar">
-        <CurrencyInput
-          allCurrencies={currencies}
-          selectedCurrency={currA}
-          value={valA}
-          
-          onCurrencyChange={handleCurrAChange}
-          onValueChange={handleValAChange}
-        ></CurrencyInput>
+                <span>-&gt;</span>
 
-        <span>-&gt;</span>
+                <CurrencyInput
+                    allCurrencies={currencies}
+                    selectedCurrency={currB}
+                    value={valB}
 
-        <CurrencyInput
-          allCurrencies={currencies}
-          selectedCurrency={currB}
-          value={valB}
-          
-          onCurrencyChange={handleCurrBChange}
-          onValueChange={handleValBChange}
-        ></CurrencyInput>
-      </div>
-      <Options
-        onPremiumChange={handlePremiumChange}
-        onFastChange={handleFastChange}
-      ></Options>
-    </div>
-  )
+                    onCurrencyChange={(val: string) => dispatch(setCurrB(val))}
+                    onValueChange={(val: number) => dispatch(setValB(val))}
+                ></CurrencyInput>
+            </div>
+            {/* <Options
+                onPremiumChange={handlePremiumChange}
+                onFastChange={handleFastChange}
+            ></Options> */}
+        </div>
+    )
 }
 
 export default App

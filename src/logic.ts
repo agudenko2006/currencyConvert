@@ -1,4 +1,4 @@
-type CurrencySymbol = string;
+export type CurrencySymbol = string;
 
 export interface IOptions {
     premium: boolean;
@@ -6,22 +6,29 @@ export interface IOptions {
 }
 
 /**
- * Функция ковертации валюты
+ * Функция покупки валюты
+ * @param from Исходная валюта
+ * @param to Целевая валюта
+ * @param amount {float} Сумма в целевой валюте (в основных единицах валюты)
+ * @param options
+ * @returns Результат конвертации в исходной валюте (в основных единицах валюты)
+ */
+export function BuyCurrency(sourceCurrency: CurrencySymbol, targetCurrency: CurrencySymbol, targetAmount: number, options?: IOptions): number {
+    return targetAmount * 4;
+}
+
+/**
+ * Функция продажи валюты
  * @param from Исходная валюта
  * @param to Целевая валюта
  * @param amount {float} Сумма в исходной валюте (в основных единицах валюты)
  * @param options
  * @returns Результат конвертации в целевой валюте (в основных единицах валюты)
  */
-export function calculateExchange(
-    from: CurrencySymbol,
-    to: CurrencySymbol,
-    amount: number,
-    options: IOptions
-    ): number {
-        console.log(`Called recalc with pr${options.premium} and fs${options.fast}`)
-        return amount*2;
+export function SellCurrency(sourceCurrency: CurrencySymbol, targetCurrency: CurrencySymbol, sourceAmount: number, options?: IOptions): number {
+    return sourceAmount * 2;
 }
+
 
 /**
  * Список доступных валют
