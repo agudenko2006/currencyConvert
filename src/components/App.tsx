@@ -2,9 +2,15 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { CurrencyInput } from "./CurrencyInput";
-import { getKnownCurrencies } from "./logic";
+import { getKnownCurrencies } from "../logic/logic";
 import { Options } from "./Options";
-import { appState, currAUpdated, currBUpdated, valAUpdated, valBUpdated } from "./store";
+import {
+  appState,
+  currAUpdated,
+  currBUpdated,
+  valAUpdated,
+  valBUpdated,
+} from "../stateManager/index";
 
 let currencies = getKnownCurrencies();
 

@@ -1,10 +1,13 @@
 import { AnyAction, applyMiddleware, createStore, Middleware } from "redux";
-import { BuyCurrency, SellCurrency } from "./logic";
+import { valARecalculated, valBRecalculated } from "./actionGenerators";
+import { BuyCurrency, SellCurrency } from "../logic/logic";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 enum LastChangedField {
   A,
   B,
 }
+
 export interface appState {
   currencyA: string;
   currencyB: string;
@@ -20,48 +23,6 @@ const defaultState: appState = {
   valB: 0,
   lastChanged: 0,
 };
-
-export function currAUpdated(val: string): AnyAction {
-  return {
-    type: "CURR_A_UPDATED",
-    payload: val,
-  };
-}
-
-export function currBUpdated(val: string): AnyAction {
-  return {
-    type: "CURR_B_UPDATED",
-    payload: val,
-  };
-}
-
-export function valAUpdated(val: number): AnyAction {
-  return {
-    type: "VAL_A_UPDATED",
-    payload: val,
-  };
-}
-
-export function valBUpdated(val: number): AnyAction {
-  return {
-    type: "VAL_B_UPDATED",
-    payload: val,
-  };
-}
-
-export function valARecalculated(val: number): AnyAction {
-  return {
-    type: "VAL_A_RECALCULATED",
-    payload: val,
-  };
-}
-
-export function valBRecalculated(val: number): AnyAction {
-  return {
-    type: "VAL_B_RECALCULATED",
-    payload: val,
-  };
-}
 
 function reducer(state: appState = defaultState, action: AnyAction) {
   switch (action.type) {
@@ -107,7 +68,7 @@ function reducer(state: appState = defaultState, action: AnyAction) {
   }
 }
 
-const calculate: Middleware = ({getState}) => {
+const calculate: Middleware = ({ getState }) => {
   return (next) => (action) => {
     next(action);
     const state = getState();
@@ -120,10 +81,10 @@ const calculate: Middleware = ({getState}) => {
     val = BuyCurrency(state.currencyA, state.currencyB, state.valB);
     return next(valARecalculated(val));
   };
-}
+};
 
 export const store = createStore(
   reducer,
   defaultState,
-  applyMiddleware(calculate)
+  composeWithDevTools(applyMiddleware(calculate))
 );
