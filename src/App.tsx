@@ -4,7 +4,7 @@ import "./App.css";
 import { CurrencyInput } from "./CurrencyInput";
 import { getKnownCurrencies } from "./logic";
 import { Options } from "./Options";
-import { appState, setCurrA, setCurrB, setValA, setValB } from "./store";
+import { appState, currAUpdated, currBUpdated, valAUpdated, valBUpdated } from "./store";
 
 let currencies = getKnownCurrencies();
 
@@ -23,8 +23,8 @@ function App() {
           allCurrencies={currencies}
           selectedCurrency={currA}
           value={valA}
-          onCurrencyChange={(val: string) => dispatch(setCurrA(val))}
-          onValueChange={(val: number) => dispatch(setValA(val))}
+          onCurrencyChange={(val: string) => dispatch(currAUpdated(val))}
+          onValueChange={(val: number) => dispatch(valAUpdated(val))}
         ></CurrencyInput>
 
         <span>-&gt;</span>
@@ -33,8 +33,8 @@ function App() {
           allCurrencies={currencies}
           selectedCurrency={currB}
           value={valB}
-          onCurrencyChange={(val: string) => dispatch(setCurrB(val))}
-          onValueChange={(val: number) => dispatch(setValB(val))}
+          onCurrencyChange={(val: string) => dispatch(currBUpdated(val))}
+          onValueChange={(val: number) => dispatch(valBUpdated(val))}
         ></CurrencyInput>
       </div>
       {/* <Options
