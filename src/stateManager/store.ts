@@ -21,7 +21,7 @@ const defaultState: appState = {
   currencyB: "BTC",
   valA: 0,
   valB: 0,
-  lastChanged: 0,
+  lastChanged: LastChangedField.A,
 };
 
 function reducer(state: appState = defaultState, action: AnyAction) {
@@ -42,14 +42,14 @@ function reducer(state: appState = defaultState, action: AnyAction) {
       return {
         ...state,
         valA: action.payload,
-        lastChanged: 0,
+        lastChanged: LastChangedField.A,
       };
 
     case "VAL_B_UPDATED":
       return {
         ...state,
         valB: action.payload,
-        lastChanged: 1,
+        lastChanged: LastChangedField.B,
       };
     case "VAL_A_RECALCULATED":
       return {
@@ -74,7 +74,7 @@ const calculate: Middleware = ({ getState }) => {
     const state = getState();
     let val;
 
-    if (state.lastChanged === 0) {
+    if (state.lastChanged === LastChangedField.A) {
       val = SellCurrency(state.currencyA, state.currencyB, state.valA);
       return next(valBRecalculated(val));
     }
