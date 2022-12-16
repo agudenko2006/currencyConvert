@@ -8,6 +8,8 @@ import {
   appState,
   currAUpdated,
   currBUpdated,
+  optionFastChanged,
+  optionPremiumChanged,
   valAUpdated,
   valBUpdated,
 } from "../stateManager/index";
@@ -43,10 +45,10 @@ function App() {
           onValueChange={(val: number) => dispatch(valBUpdated(val))}
         ></CurrencyInput>
       </div>
-      {/* <Options
-                onPremiumChange={handlePremiumChange}
-                onFastChange={handleFastChange}
-            ></Options> */}
+      <Options
+        onPremiumChange={(val: boolean) => dispatch(optionPremiumChanged(val))}
+        onFastChange={(val: boolean) => dispatch(optionFastChanged(val))}
+      ></Options>
     </div>
   );
 }

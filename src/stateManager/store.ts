@@ -14,6 +14,8 @@ export interface appState {
   valA: number;
   valB: number;
   lastChanged: LastChangedField;
+  optionFast: boolean;
+  optionPremium: boolean;
 }
 
 const defaultState: appState = {
@@ -22,6 +24,8 @@ const defaultState: appState = {
   valA: 0,
   valB: 0,
   lastChanged: LastChangedField.A,
+  optionFast: false,
+  optionPremium: false,
 };
 
 function reducer(state: appState = defaultState, action: AnyAction) {
@@ -51,6 +55,16 @@ function reducer(state: appState = defaultState, action: AnyAction) {
         valB: action.payload,
         lastChanged: LastChangedField.B,
       };
+    case "OPTION_FAST_CHANGED":
+      return {
+        ...state,
+        optionFast: action.payload,
+      };
+    case "OPTION_PREMIUM_CHANGED":
+      return {
+        ...state,
+        optionPremium: action.payload,
+      };
     case "VAL_A_RECALCULATED":
       return {
         ...state,
@@ -64,6 +78,7 @@ function reducer(state: appState = defaultState, action: AnyAction) {
       };
 
     default:
+      console.log("Error in reducer: unexpected action `", action.name, "`!");
       return state;
   }
 }

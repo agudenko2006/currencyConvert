@@ -1,7 +1,9 @@
 # Currency Converter
+
 This is a student project, so don't use it in production...
 
 ## Getting started
+
 ```bash
 git clone https://github.com/agudenko2006/currencyConvert
 cd currencyConvert
@@ -10,9 +12,10 @@ npm start # or npm run dev
 ```
 
 ## Structure
+
 - `src/components`
   - `App` is the main component, it communicates with the `src/stateManager`
   - `CurrencyInput` is a component that provides a number input and a drop-down list of currencies
-  - `Options`(WIP)
+  - `Options` are the checkboxes underneath the inputs that affect the calculated value
 - `src/logic` is the model implementation
 - `src/stateManager` uses Redux to store the app's state
