@@ -1,11 +1,6 @@
 export type CurrencySymbol = string;
 const baseUrl = "https://functions.yandexcloud.net/d4el15n3josghdmf2630"
 
-export interface IOptions {
-  premium: boolean;
-  fast: boolean;
-}
-
 /**
  * Функция покупки валюты
  * @param from Исходная валюта
@@ -18,11 +13,12 @@ export function buyCurrency(
   sourceCurrency: CurrencySymbol,
   targetCurrency: CurrencySymbol,
   targetAmount: number,
-  options?: IOptions
+  fast: boolean,
+  premium: boolean,
 ): Promise<number> {
   const url = baseUrl+`?action=buy&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&targetAmount=${targetAmount}`
   // console.log("fetchingb "+url)
-  return fetch(url).then(res => res.json())
+  return fetch(url+`&fast=${fast}&premium=${premium}`).then(res => res.json())
 }
 
 /**
@@ -37,7 +33,8 @@ export function sellCurrency(
   sourceCurrency: CurrencySymbol,
   targetCurrency: CurrencySymbol,
   sourceAmount: number,
-  options?: IOptions
+  fast: boolean,
+  premium: boolean,
 ): Promise<number> {
   const url = baseUrl+`?action=sell&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${sourceAmount}`
   // console.log("fetchings "+url)
