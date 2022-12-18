@@ -19,8 +19,8 @@ export interface appState {
 }
 
 const defaultState: appState = {
-  currencyA: "USD",
-  currencyB: "BTC",
+  currencyA: "LOAD",
+  currencyB: "LOAD",
   valA: 0,
   valB: 0,
   lastChanged: LastChangedField.A,
