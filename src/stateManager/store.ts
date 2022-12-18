@@ -65,6 +65,7 @@ function reducer(state: appState = defaultState, action: AnyAction) {
         ...state,
         optionPremium: action.payload,
       };
+
     case "VAL_A_RECALCULATED":
       return {
         ...state,
@@ -78,7 +79,6 @@ function reducer(state: appState = defaultState, action: AnyAction) {
       };
 
     default:
-      console.log("Error in reducer: unexpected action `", action.name, "`!");
       return state;
   }
 }
