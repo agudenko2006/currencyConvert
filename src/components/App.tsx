@@ -22,16 +22,16 @@ function App() {
   const valA = useSelector((state: appState) => state.valA);
   const valB = useSelector((state: appState) => state.valB);
 
-  let [currencies, setCurrencies] = useState(["loading"])
+  const [currencies, setCurrencies] = useState(["loading"]);
 
   useEffect(() => {
-    getKnownCurrencies().then(val => {
-      setCurrencies(val)
-      console.log(val)
-      dispatch(currAUpdated(val[0]))
-      dispatch(currBUpdated(val[1]))
-    })
-  }, [])
+    getKnownCurrencies().then((val) => {
+      setCurrencies(val);
+      console.log(val);
+      dispatch(currAUpdated(val[0]));
+      dispatch(currBUpdated(val[1]));
+    });
+  }, []);
 
   return (
     <div className="wrapper">

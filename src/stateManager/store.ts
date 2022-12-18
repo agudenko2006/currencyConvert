@@ -90,9 +90,21 @@ const calculate: Middleware = ({ getState }) => {
     let val;
 
     if (state.lastChanged === LastChangedField.A) {
-      val = sellCurrency(state.currencyA, state.currencyB, state.valA, state.fast, state.premium).then(val=>next(valBRecalculated(val)));
+      val = sellCurrency(
+        state.currencyA,
+        state.currencyB,
+        state.valA,
+        state.fast,
+        state.premium
+      ).then((val) => next(valBRecalculated(val)));
     } else {
-      val = buyCurrency(state.currencyA, state.currencyB, state.valB, state.fast, state.premium).then(val=>next(valARecalculated(val)));
+      val = buyCurrency(
+        state.currencyA,
+        state.currencyB,
+        state.valB,
+        state.fast,
+        state.premium
+      ).then((val) => next(valARecalculated(val)));
     }
   };
 };

@@ -1,5 +1,5 @@
 export type CurrencySymbol = string;
-const baseUrl = "https://functions.yandexcloud.net/d4el15n3josghdmf2630"
+const baseUrl = "https://functions.yandexcloud.net/d4el15n3josghdmf2630";
 
 /**
  * Функция покупки валюты
@@ -14,11 +14,15 @@ export function buyCurrency(
   targetCurrency: CurrencySymbol,
   targetAmount: number,
   fast: boolean,
-  premium: boolean,
+  premium: boolean
 ): Promise<number> {
-  const url = baseUrl+`?action=buy&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&targetAmount=${targetAmount}`
+  const url =
+    baseUrl +
+    `?action=buy&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&targetAmount=${targetAmount}`;
   // console.log("fetchingb "+url)
-  return fetch(url+`&fast=${fast}&premium=${premium}`).then(res => res.json())
+  return fetch(url + `&fast=${fast}&premium=${premium}`).then((res) =>
+    res.json()
+  );
 }
 
 /**
@@ -34,11 +38,13 @@ export function sellCurrency(
   targetCurrency: CurrencySymbol,
   sourceAmount: number,
   fast: boolean,
-  premium: boolean,
+  premium: boolean
 ): Promise<number> {
-  const url = baseUrl+`?action=sell&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${sourceAmount}`
+  const url =
+    baseUrl +
+    `?action=sell&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${sourceAmount}`;
   // console.log("fetchings "+url)
-  return fetch(url).then(res => res.json())
+  return fetch(url).then((res) => res.json());
 }
 
 /**
@@ -46,5 +52,7 @@ export function sellCurrency(
  * @returns
  */
 export function getKnownCurrencies(): Promise<CurrencySymbol[]> {
-  return fetch(baseUrl+"?action=getCurrencies").then(res => res.json()).catch(err => console.log(err))
+  return fetch(baseUrl + "?action=getCurrencies")
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 }
