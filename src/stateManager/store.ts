@@ -1,6 +1,6 @@
 import { AnyAction, applyMiddleware, createStore, Middleware } from "redux";
 import { valARecalculated, valBRecalculated } from "./actionGenerators";
-import { BuyCurrency, SellCurrency } from "../logic/logic";
+import { buyCurrency, sellCurrency } from "../logic/logic";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 enum LastChangedField {
@@ -90,11 +90,10 @@ const calculate: Middleware = ({ getState }) => {
     let val;
 
     if (state.lastChanged === LastChangedField.A) {
-      val = SellCurrency(state.currencyA, state.currencyB, state.valA);
-      return next(valBRecalculated(val));
+      val = sellCurrency(state.currencyA, state.currencyB, state.valA).then(val=>next(valBRecalculated(val)));
+    } else {
+      val = buyCurrency(state.currencyA, state.currencyB, state.valB).then(val=>next(valARecalculated(val)));
     }
-    val = BuyCurrency(state.currencyA, state.currencyB, state.valB);
-    return next(valARecalculated(val));
   };
 };
 

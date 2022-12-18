@@ -1,4 +1,5 @@
 export type CurrencySymbol = string;
+const baseUrl = "https://functions.yandexcloud.net/d4el15n3josghdmf2630"
 
 export interface IOptions {
   premium: boolean;
@@ -13,13 +14,15 @@ export interface IOptions {
  * @param options
  * @returns Результат конвертации в исходной валюте (в основных единицах валюты)
  */
-export function BuyCurrency(
+export function buyCurrency(
   sourceCurrency: CurrencySymbol,
   targetCurrency: CurrencySymbol,
   targetAmount: number,
   options?: IOptions
-): number {
-  return targetAmount * 4;
+): Promise<number> {
+  const url = baseUrl+`?action=buy&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&targetAmount=${targetAmount}`
+  // console.log("fetchingb "+url)
+  return fetch(url).then(res => res.json())
 }
 
 /**
@@ -30,19 +33,21 @@ export function BuyCurrency(
  * @param options
  * @returns Результат конвертации в целевой валюте (в основных единицах валюты)
  */
-export function SellCurrency(
+export function sellCurrency(
   sourceCurrency: CurrencySymbol,
   targetCurrency: CurrencySymbol,
   sourceAmount: number,
   options?: IOptions
-): number {
-  return sourceAmount * 2;
+): Promise<number> {
+  const url = baseUrl+`?action=sell&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${sourceAmount}`
+  // console.log("fetchings "+url)
+  return fetch(url).then(res => res.json())
 }
 
 /**
  * Список доступных валют
  * @returns
  */
-export function getKnownCurrencies(): CurrencySymbol[] {
-  return ["BTC", "USDT", "ETH"];
+export function getKnownCurrencies(): Promise<CurrencySymbol[]> {
+  return fetch(baseUrl+"?action=getCurrencies").then(res => res.json()).catch(err => console.log(err))
 }

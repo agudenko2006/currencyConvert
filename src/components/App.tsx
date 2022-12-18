@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { CurrencyInput } from "./CurrencyInput";
@@ -14,8 +14,6 @@ import {
   valBUpdated,
 } from "../stateManager/index";
 
-let currencies = getKnownCurrencies();
-
 function App() {
   const dispatch = useDispatch();
 
@@ -23,6 +21,17 @@ function App() {
   const currB = useSelector((state: appState) => state.currencyB);
   const valA = useSelector((state: appState) => state.valA);
   const valB = useSelector((state: appState) => state.valB);
+
+  let [currencies, setCurrencies] = useState(["loading"])
+
+  useEffect(() => {
+    getKnownCurrencies().then(val => {
+      setCurrencies(val)
+      console.log(val)
+      dispatch(currAUpdated(val[0]))
+      dispatch(currBUpdated(val[1]))
+    })
+  }, [])
 
   return (
     <div className="wrapper">
