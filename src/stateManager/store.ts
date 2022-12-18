@@ -94,16 +94,16 @@ const calculate: Middleware = ({ getState }) => {
         state.currencyA,
         state.currencyB,
         state.valA,
-        state.fast,
-        state.premium
+        state.optionFast,
+        state.optionPremium
       ).then((val) => next(valBRecalculated(val)));
     } else {
       val = buyCurrency(
         state.currencyA,
         state.currencyB,
         state.valB,
-        state.fast,
-        state.premium
+        state.optionFast,
+        state.optionPremium
       ).then((val) => next(valARecalculated(val)));
     }
   };

@@ -19,7 +19,7 @@ export function buyCurrency(
   const url =
     baseUrl +
     `?action=buy&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&targetAmount=${targetAmount}`;
-  // console.log("fetchingb "+url)
+  // console.log("fetchingb "+url+fast+premium)
   return fetch(url + `&fast=${fast}&premium=${premium}`).then((res) =>
     res.json()
   );
@@ -43,7 +43,7 @@ export function sellCurrency(
   const url =
     baseUrl +
     `?action=sell&sourceCurrency=${sourceCurrency}&targetCurrency=${targetCurrency}&sourceAmount=${sourceAmount}`;
-  // console.log("fetchings "+url)
+  // console.log("fetchings "+url+fast+premium)
   return fetch(url).then((res) => res.json());
 }
 
